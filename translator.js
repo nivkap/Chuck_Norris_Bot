@@ -11,14 +11,12 @@ export default class Translator {
     }
 
     async init() {
-
         try {
             const res = await axios.get("https://api.cognitive.microsofttranslator.com/languages",
                 {
                     params: {
                         'api-version': '3.0',
                     }
-
                 });
             this.languages_dict = res.data.translation
             this.createLanguageNameAndCodeDict()
@@ -38,7 +36,6 @@ export default class Translator {
     }
 
     getCodeByName(languageName) {
-
         languageName = languageName.toLowerCase()
 
         if (this.languageName_to_code[languageName]) {
@@ -48,7 +45,7 @@ export default class Translator {
     }
 
     async translate(text) {
-        return await translate_async(text, this.target)
+        return await translate_func(text, this.target)
     }
 }
 
@@ -57,7 +54,7 @@ const key = process.env.AZURE_TRANSLATOR_KEY;
 const endpoint = process.env.ENDPOINT;
 const location = process.env.LOCATION;
 
-async function translate_async(text, targetLanguage) {
+async function translate_func(text, targetLanguage) {
     try {
         const response = await axios({
             baseURL: endpoint,

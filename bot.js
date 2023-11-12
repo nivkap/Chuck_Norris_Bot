@@ -3,9 +3,7 @@ import { config } from 'dotenv';
 config();
 
 const token = process.env.TELEGRAM_BOT_TOKEN;
-
 const bot = new TelegramBot(token, { polling: true });
-
 
 async function init(translator, scraper) {
 
@@ -29,8 +27,8 @@ async function init(translator, scraper) {
     async function setLanguage(msg, chatId){
     
         const res = msg.match(options.language)[12];
-    
-        const code = translator.getCodeByName(res)
+        const code = translator.getCodeByName(res);
+
         if (!code) {
             bot.sendMessage(chatId, await translator.translate("Sorry, I could not process your request. Please check for any typo or select another language\n"))
             return;
@@ -56,7 +54,6 @@ async function init(translator, scraper) {
         }
 
         const translatedText = await translator.translate(`${res}. ` + scraper.getJoke(res))
-
         bot.sendMessage(chatId, translatedText)
     }
 
